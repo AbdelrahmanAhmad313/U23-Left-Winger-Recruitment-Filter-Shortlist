@@ -1,6 +1,5 @@
 import requests
 import json
-from src.ingestion.fotmob_ingestion import laliga_id , bundesliga_id
 
 fotmob_metrics = { # name : url_name
 "Goals" : "goals" ,
@@ -28,8 +27,9 @@ fotmob_metrics = { # name : url_name
 "Possession won final 3rd per 90" : "poss_won_att_3rd" ,
 }
 
-league_id = bundesliga_id
-season_id = 27233
+league_id = 54
+season_id = 26891 
+# laliga 2025-26 season id = 27233
 
 
 for name,json_name in fotmob_metrics.items():
@@ -38,9 +38,18 @@ for name,json_name in fotmob_metrics.items():
     response = requests.get(url)
     
     print("Status code:", response.status_code)
-    with open(f"data/raw/fotmob/budesliga_2025_26/{name}.json","w", encoding="utf-8") as file:
-        json.dump(response.json(),file)
-    print("saved successfuly")
+    if response.status_code == 200:
+        with open(
+        f"data/raw/fotmob/bundesliga_2025_26/{name}.json",
+        "w",
+        encoding="utf-8"
+        ) as file:
+            json.dump(response.json(), file)
+
+        print("Saved successfully")
+
+    else:
+        print("Request failed:", response.status_code)
     
 
 
