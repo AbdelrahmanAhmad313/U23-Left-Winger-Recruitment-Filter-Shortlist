@@ -1,55 +1,75 @@
 import pandas as pd
+import json
+from pathlib import Path
 
-final_df=[]
-data_path="data/raw/"
-fotmob_df = pd.read_json(f"{data_path}fotmob/bundesliga_2025_26/Goals.json")
-transfermarket_df=pd.read_json(f"{data_path}transfermarkt-scraper/bundesliga_u23_left_wingers_2025_26.json",
-                               encoding="cp1252",
-                               lines=True,)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-top_scorer = fotmob_df["TopLists"][0]
-
-top_scorers_df = pd.DataFrame(top_scorer["StatList"])
-statsNameCapital= top_scorer["StatName"].capitalize()
-top_scorers_df=top_scorers_df.rename(
-    columns={
-        "ParticiantId":"Player Id",
-        "ParticipantName":"Player Name",
-        "TeamId":"Team Id",
-        "TeamName":"Team Name",
-        "StatValue":statsNameCapital,
-    }
-)
-# print(top_scorers_df[["Player Id","Player Name","Team Id","Team Name",statsNameCapital]])
-# print(top_scorers_df[top_scorers_df["Player Name"]=="justin diehl"])
-
-# final_df=transfermarket_df.merge(
-#     how="left",
-#     on=transfermarket_df[""]
-    
-# )
-# print(transfermarket_df.columns)
-
-
-# justin-diehl--> transfermarket
-#
-
-import difflib
-from difflib import SequenceMatcher
-
-# Find closest matches in a list
-
-names = top_scorers_df["Player Name"].tolist()
-
-closest = difflib.get_close_matches(
-    "Justin ",
-    names,
-    n=5,
-    cutoff=0.6
+FOTMOB_BUNDESLIGA_GOALS_PATH=(
+    PROJECT_ROOT    
+    / "data"
+    / "raw"
+    / "fotmob"
+    /"bundesliga_2025_26"
+    / "Goals.json"
 )
 
-print(closest) # Output: ['apple', 'appeal']
+def fotmobPath(league,metric):
+    fotmob_data_path=(
+    PROJECT_ROOT
+    /"data"
+    /"raw"
+    /"fotmob"
+    /f"{league}_2025_26"
+    /f"{metric}.json"
+)
 
-# # Get a percentage score (0.0 to 1.0) between two strings
-# score = SequenceMatcher(None, "apple", "appeal").ratio()
-# print(score)  # Output: 0.7272727272727273
+    return fotmob_data_path
+
+
+def load_fotmob(path):
+    """Load an Fotmob JSON array."""
+    with open(path, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    players = []
+
+    for top_list in data["TopLists"]:
+        players.extend(top_list["StatList"])
+
+    return players
+
+
+
+
+fotmob_goals_df = pd.DataFrame(load_fotmob(fotmobPath("bundesliga","Goals")))
+fotmob_xg_df = pd.DataFrame(load_fotmob(fotmobPath("bundesliga","xG")))
+
+# transfermarket_df=pd.read_json(f"{data_path}transfermarkt-scraper/bundesliga_u23_left_wingers_2025_26.json",
+#                                encoding="cp1252",
+#                                lines=True,)
+fotmob_goals_df = fotmob_goals_df[
+    ["ParticiantId", "ParticipantName", "TeamName", "StatValue"]
+].rename(
+    columns={"StatValue": "goals"}
+)
+
+fotmob_xg_df = fotmob_xg_df[
+    ["ParticiantId", "StatValue"]
+].rename(
+    columns={"StatValue": "xG"}
+)
+
+all_fotmob_players = fotmob_goals_df.merge(
+    fotmob_xg_df,
+    on="ParticiantId",
+    how="outer"
+)
+all_fotmob_players = all_fotmob_players.rename(
+    columns={"ParticiantId": "participant_id"}
+)
+
+print(all_fotmob_players.shape)
+print(all_fotmob_players.head())
+print(all_fotmob_players.columns.tolist())
+# print(all_fotmob_players)
+

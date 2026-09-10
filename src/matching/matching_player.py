@@ -470,6 +470,7 @@ for player in laliga_tm:
         "player_name": f'{player["name"]} {player["last_name"]}',
         "league": "LaLiga",
         "transfermarkt_club": player["parent"]["name"],
+        "transfermarkt_code":player["code"],
         "games": understat["games"] if understat is not None else None,
         "minutes": understat["time"] if understat is not None else None,
         "goals": understat["goals"] if understat is not None else None,
@@ -498,10 +499,10 @@ for player in laliga_tm:
                     else None
                 ),
                 "fotmob_id":(
-                                    fotmob["ParticiantId"]
-                                    if fotmob is not None
-                                    else None
-                                ),
+                    fotmob["ParticiantId"]
+                    if fotmob is not None
+                    else None
+                ),
                 "understat_id":(
                     understat["id"]
                     if understat is not None
