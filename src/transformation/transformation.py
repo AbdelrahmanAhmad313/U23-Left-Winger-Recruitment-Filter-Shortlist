@@ -47,6 +47,8 @@ fotmob_xg_df = pd.DataFrame(load_fotmob(fotmobPath("bundesliga","xG")))
 # transfermarket_df=pd.read_json(f"{data_path}transfermarkt-scraper/bundesliga_u23_left_wingers_2025_26.json",
 #                                encoding="cp1252",
 #                                lines=True,)
+
+
 fotmob_goals_df = fotmob_goals_df[
     ["ParticiantId", "ParticipantName", "TeamName", "StatValue"]
 ].rename(
@@ -68,8 +70,7 @@ all_fotmob_players = all_fotmob_players.rename(
     columns={"ParticiantId": "participant_id"}
 )
 
-print(all_fotmob_players.shape)
-print(all_fotmob_players.head())
-print(all_fotmob_players.columns.tolist())
+# print(all_fotmob_players.shape)
+# print(all_fotmob_players.head())
+# print(all_fotmob_players.columns.tolist())
 # print(all_fotmob_players)
-

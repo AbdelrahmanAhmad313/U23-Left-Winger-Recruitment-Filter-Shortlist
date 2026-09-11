@@ -58,7 +58,7 @@ FOTMOB_LALIGA_PATH=(
 
 def load_json_lines(path):
     """Load a JSONL file where each line contains one JSON object."""
-    with open(path, "r", encoding="cp1252") as file:
+    with open(path, "r", encoding="utf-8") as file:
         return [json.loads(line) for line in file]
 
 

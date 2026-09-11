@@ -1,5 +1,5 @@
 import pandas as pd
-from matching_player import (result_matched_players,get_understat_club_players,bundesliga_understat,laliga_understat,
+from matching.matching_player import (result_matched_players,get_understat_club_players,bundesliga_understat,laliga_understat,
                              bundesliga_fotmob,
                              normalize_name,
                              laliga_fotmob
