@@ -3,9 +3,9 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from loading.loading_fotmob import all_candidates_fotmob
+from loading.loading_fotmob import all_candidates
 
-id_columns = all_candidates_fotmob[
+id_columns = all_candidates[
     [
         "player_key",
         "player_name",
@@ -15,7 +15,7 @@ id_columns = all_candidates_fotmob[
     ]
 ]
 
-missing = all_candidates_fotmob.isna().sum()
+missing = all_candidates.isna().sum()
 
 # print(
 #     missing[
@@ -24,7 +24,7 @@ missing = all_candidates_fotmob.isna().sum()
 # )
 
 missing_pct = (
-    all_candidates_fotmob.isna().mean() * 100
+    all_candidates.isna().mean() * 100
 ).sort_values(ascending=False)
 
 # print(
@@ -79,8 +79,8 @@ missing_pct = (
 #     ].head(15).to_string(index=False)
 # )
 
-comparison = all_candidates_fotmob[
-    all_candidates_fotmob["data_group"] == "Both"
+comparison = all_candidates[
+    all_candidates["data_group"] == "Both"
 ][
     [
         "player_name",

@@ -3,11 +3,10 @@ from pathlib import Path
 import sys
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from loading.loading_fotmob import all_candidates_fotmob
+from loading.loading_fotmob import all_candidates,player_valuations_df
 
-all_candidates_fotmob = all_candidates_fotmob.rename(
+all_candidates = all_candidates.rename(
     columns={
-        "transfermarkt_code":"transfermarkt_id",
         "transfermarkt_club":"club_2025_26",
         "games": "understat_games",
         "minutes_x": "understat_minutes",
@@ -18,7 +17,6 @@ all_candidates_fotmob = all_candidates_fotmob.rename(
         "shots": "understat_shots",
         "key_passes": "understat_key_passes",
         "npxG": "understat_npxG",
-
         "goals_y": "fotmob_goals",
         "assists_y": "fotmob_assists",
         "xG_y": "fotmob_xG",
@@ -26,15 +24,33 @@ all_candidates_fotmob = all_candidates_fotmob.rename(
         "minutes_y": "fotmob_minutes",
     }
 )
+all_candidates.drop(columns='transfermarkt_code',inplace=True)
 
-all_candidates_fotmob["date_of_birth"] = pd.to_datetime(
-    all_candidates_fotmob["date_of_birth"],
+all_candidates["date_of_birth"] = pd.to_datetime(
+    all_candidates["date_of_birth"],
     format="%d/%m/%Y",
     errors="coerce"
 )
+player_valuations_df=player_valuations_df.rename(
+    columns={
+        "player_id":"transfermarkt_id",
+        "date":"valuation_date"
+    }
+)
+player_valuations_df["transfermarkt_id"]=player_valuations_df["transfermarkt_id"].astype(str)
+player_valuations_df["valuation_date"] = pd.to_datetime(
+    player_valuations_df["valuation_date"],
+    format="%Y-%m-%d",
+    errors="coerce"
+)
+
+
+# print(all_candidates["transfermarkt_id"].dtypes)
+# print(player_valuations_df["date"].dtypes)
+
 # print(all_candidates_fotmob["date_of_birth"][0])        
 # print(type(date_object)) 
 
-# print(all_candidates_fotmob.columns.tolist())
+# print(all_candidates.columns.tolist())
 # print(all_candidates_fotmob.shape)
 # print(all_candidates_fotmob.head())

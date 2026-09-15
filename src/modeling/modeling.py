@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from validation.validation import all_candidates_fotmob
+from validation.validation import all_candidates,player_valuations_df
 from matching.matching_player import PROJECT_ROOT
 
 candidate_players_columns = [
@@ -20,7 +20,11 @@ candidate_players_columns = [
 "current_market_value",
 ]
 
-
+market_value_columns=[
+    "player_key",
+    "valuation_date",
+    "market_value_in_eur"
+]
 
 source_identity_columns = [
     "player_key",
@@ -75,11 +79,12 @@ candidate_data_status_columns = [
 "data_status",
 ]
 
-candidate_players_df=all_candidates_fotmob[candidate_players_columns]
-source_identity_df=all_candidates_fotmob[source_identity_columns]
-understat_stats_df=all_candidates_fotmob.loc[all_candidates_fotmob["understat_id"].notna(),understat_stats_columns]
-fotmob_stats_df=all_candidates_fotmob.loc[all_candidates_fotmob["fotmob_id"].notna(),fotmob_stats_columns]
-candidate_data_status_df=all_candidates_fotmob[candidate_data_status_columns]
+candidate_players_df=all_candidates[candidate_players_columns]
+source_identity_df=all_candidates[source_identity_columns]
+understat_stats_df=all_candidates.loc[all_candidates["understat_id"].notna(),understat_stats_columns]
+fotmob_stats_df=all_candidates.loc[all_candidates["fotmob_id"].notna(),fotmob_stats_columns]
+candidate_data_status_df=all_candidates[candidate_data_status_columns]
+market_value_df=player_valuations_df[market_value_columns]
 
 
 
@@ -156,31 +161,46 @@ print("Model tables exported successfully.")
 # FINAL MODEL SUMMARY
 # =========================
 
-print("\nFinal model summary:")
-print("candidate_players:", candidate_players_df.shape)
-print("source_identity:", source_identity_df.shape)
-print("understat_stats:", understat_stats_df.shape)
-print("fotmob_stats:", fotmob_stats_df.shape)
-print("candidate_data_status:", candidate_data_status_df.shape)
+# print("\nFinal model summary:")
+# print("candidate_players:", candidate_players_df.shape)
+# print("source_identity:", source_identity_df.shape)
+# print("understat_stats:", understat_stats_df.shape)
+# print("fotmob_stats:", fotmob_stats_df.shape)
+# print("candidate_data_status:", candidate_data_status_df.shape)
 
-print("\nUnique player counts:")
-print(
-    "candidate_players:",
-    candidate_players_df["player_key"].nunique()
-)
-print(
-    "source_identity:",
-    source_identity_df["player_key"].nunique()
-)
-print(
-    "understat_stats:",
-    understat_stats_df["player_key"].nunique()
-)
-print(
-    "fotmob_stats:",
-    fotmob_stats_df["player_key"].nunique()
-)
-print(
-    "candidate_data_status:",
-    candidate_data_status_df["player_key"].nunique()
-)
+# print("\nUnique player counts:")
+# print(
+#     "candidate_players:",
+#     candidate_players_df["player_key"].nunique()
+# )
+# print(
+#     "source_identity:",
+#     source_identity_df["player_key"].nunique()
+# )
+# print(
+#     "understat_stats:",
+#     understat_stats_df["player_key"].nunique()
+# )
+# print(
+#     "fotmob_stats:",
+#     fotmob_stats_df["player_key"].nunique()
+# )
+# print(
+#     "candidate_data_status:",
+#     candidate_data_status_df["player_key"].nunique()
+# )
+
+
+# print(market_value_df.head())
+# print(market_value_df.shape)
+# print(market_value_df["player_key"].nunique())
+# print(market_value_df["player_key"].is_unique)
+
+market_value_orphans = market_value_df[
+    ~market_value_df["player_key"].isin(
+        candidate_players_df["player_key"]
+    )
+]
+
+print("Market value orphan keys:")
+print(market_value_orphans["player_key"].tolist())

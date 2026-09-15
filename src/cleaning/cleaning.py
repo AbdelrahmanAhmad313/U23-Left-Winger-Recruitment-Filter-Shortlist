@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from transformation.transformation import all_candidates_fotmob
+from transformation.transformation import all_candidates,player_valuations_df
 
 
 understat_numeric_columns = [
@@ -18,8 +18,8 @@ understat_numeric_columns = [
     "understat_npxG"
 ]
 
-all_candidates_fotmob[understat_numeric_columns] = (
-    all_candidates_fotmob[understat_numeric_columns]
+all_candidates[understat_numeric_columns] = (
+    all_candidates[understat_numeric_columns]
     .apply(pd.to_numeric, errors="coerce")
 )
 
@@ -42,8 +42,8 @@ name_corrections = {
     "Paco Cort�s": "Paco Cortés"
 }
 
-all_candidates_fotmob["player_name"] = (
-    all_candidates_fotmob["player_name"].replace(name_corrections)
+all_candidates["player_name"] = (
+    all_candidates["player_name"].replace(name_corrections)
 )
 
 
@@ -53,23 +53,23 @@ club_corrections = {
     "Deportivo Alav�s": "Deportivo Alavés"
 }
 
-all_candidates_fotmob["club_2025_26"] = (
-    all_candidates_fotmob["club_2025_26"].replace(club_corrections)
+all_candidates["club_2025_26"] = (
+    all_candidates["club_2025_26"].replace(club_corrections)
 )
 
 
-all_candidates_fotmob["current_club"] = (
-    all_candidates_fotmob["current_club"]
+all_candidates["current_club"] = (
+    all_candidates["current_club"]
     .apply(lambda x: x["href"].split("/")[1])
     .str.replace("-"," ")
 )
-all_candidates_fotmob["contract_expires"] = pd.to_datetime(
-    all_candidates_fotmob["contract_expires"].replace("-", pd.NaT),
+all_candidates["contract_expires"] = pd.to_datetime(
+    all_candidates["contract_expires"].replace("-", pd.NaT),
     format="%d/%m/%Y",
     errors="coerce"
 )
-all_candidates_fotmob["foot"]=(
-    all_candidates_fotmob["foot"].fillna("No Info")
+all_candidates["foot"]=(
+    all_candidates["foot"].fillna("No Info")
 )
 
 
@@ -77,19 +77,38 @@ all_candidates_fotmob["foot"]=(
 
 reference_date = pd.Timestamp("2026-07-01")
 
-all_candidates_fotmob["age_2026_07_01"] = (
+all_candidates["age_2026_07_01"] = (
     reference_date.year
-    - all_candidates_fotmob["date_of_birth"].dt.year
+    - all_candidates["date_of_birth"].dt.year
     - (
-        (all_candidates_fotmob["date_of_birth"].dt.month > reference_date.month)
+        (all_candidates["date_of_birth"].dt.month > reference_date.month)
         |
         (
-            (all_candidates_fotmob["date_of_birth"].dt.month == reference_date.month)
+            (all_candidates["date_of_birth"].dt.month == reference_date.month)
             &
-            (all_candidates_fotmob["date_of_birth"].dt.day > reference_date.day)
+            (all_candidates["date_of_birth"].dt.day > reference_date.day)
         )
     ).astype(int)
 )
 
-# print(all_candidates_fotmob.columns)
+
+player_valuations_df = (
+    player_valuations_df.sort_values("valuation_date")
+      .drop_duplicates(subset="transfermarkt_id", keep="last")
+)
+
+player_valuations_df=pd.merge(
+    player_valuations_df,
+    all_candidates[["player_key","transfermarkt_id"]],
+    on="transfermarkt_id",
+    how="inner"
+)
+
+
+
+# print(player_valuations_df.shape)
+# print(all_candidates.shape)
+
+# print(all_candidates_fotmob["current_market_value"].head())
 # print(all_candidates_fotmob[["player_key","age_2026_07_01","current_club","date_of_birth","position","contract_expires","current_market_value","foot"]])
+

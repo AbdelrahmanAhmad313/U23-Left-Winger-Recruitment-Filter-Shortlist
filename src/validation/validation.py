@@ -4,7 +4,7 @@ import pandas as pd
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from cleaning.cleaning import all_candidates_fotmob
+from cleaning.cleaning import all_candidates,player_valuations_df
 
 
 def check_duplicate_players(df):
@@ -410,4 +410,4 @@ def run_validation(df):
 
 
 if __name__ == "__main__":
-    run_validation(all_candidates_fotmob)
+    run_validation(all_candidates)

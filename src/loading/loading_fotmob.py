@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from matching.matching_table import players_df
+from matching.matching_player import bundesliga_tm,laliga_tm
 
 def load_fotmob_metric(path, metric_name):
     with open(path, "r", encoding="utf-8") as file:
@@ -158,7 +159,7 @@ laliga_candidates_fotmob = laliga_candidates.merge(
     how="left"
 )
 
-all_candidates_fotmob = pd.concat(
+all_candidates = pd.concat(
     [
         bundesliga_candidates_fotmob,
         laliga_candidates_fotmob
@@ -166,36 +167,63 @@ all_candidates_fotmob = pd.concat(
     ignore_index=True
 )
 
-all_candidates_fotmob["data_group"] = "Neither"
+all_candidates["data_group"] = "Neither"
 
-all_candidates_fotmob.loc[
-    all_candidates_fotmob["understat_id"].notna()
-    & all_candidates_fotmob["fotmob_id"].notna(),
+all_candidates.loc[
+    all_candidates["understat_id"].notna()
+    & all_candidates["fotmob_id"].notna(),
     "data_group"
 ] = "Both"
 
-all_candidates_fotmob.loc[
-    all_candidates_fotmob["understat_id"].notna()
-    & all_candidates_fotmob["fotmob_id"].isna(),
+all_candidates.loc[
+    all_candidates["understat_id"].notna()
+    & all_candidates["fotmob_id"].isna(),
     "data_group"
 ] = "Understat only"
 
-all_candidates_fotmob.loc[
-    all_candidates_fotmob["understat_id"].isna()
-    & all_candidates_fotmob["fotmob_id"].notna(),
+all_candidates.loc[
+    all_candidates["understat_id"].isna()
+    & all_candidates["fotmob_id"].notna(),
     "data_group"
 ] = "FotMob only"
-neither_players = all_candidates_fotmob[
-    all_candidates_fotmob["data_group"] == "Neither"
+neither_players = all_candidates[
+    all_candidates["data_group"] == "Neither"
 ][
     ["player_key", "player_name", "league", "transfermarkt_club"]
 ]
 
-all_candidates_fotmob["data_status"] = "Insufficient performance data"
+all_candidates["data_status"] = "Insufficient performance data"
 
-all_candidates_fotmob.loc[
-    all_candidates_fotmob["data_group"] != "Neither",
+all_candidates.loc[
+    all_candidates["data_group"] != "Neither",
     "data_status"
 ] = "Performance data available"
 
-# print(all_candidates_fotmob["data_status"].value_counts())
+
+player_id_df=pd.DataFrame(bundesliga_tm)
+
+bundesliga_players_id=(player_id_df["href"]
+    .apply(lambda x: x.split("/")[4]))
+
+player_id_df=pd.DataFrame(laliga_tm)
+
+laliga_players_id=(player_id_df["href"]
+    .apply(lambda x: x.split("/")[4]))
+
+
+all_players_id_df=pd.concat(
+    [
+    bundesliga_players_id,
+    laliga_players_id
+    ],
+    ignore_index=True
+)
+
+all_candidates["transfermarkt_id"]=all_players_id_df
+
+player_valuations = pd.read_csv(
+    "data/raw/transfermarkt-scraper/player_valuations.csv"
+)
+player_valuations_df=pd.DataFrame(player_valuations)
+# print(player_valuations_df.columns)
+# print(all_candidates_fotmob.head())
