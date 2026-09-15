@@ -415,7 +415,9 @@ matched_players = []
 for player in bundesliga_tm:
     understat = player.get("understat_match")
     fotmob = player.get("fotmob_match")
-
+    
+    
+    
     matched_players.append({
         "player_name": f'{player["name"]} {player["last_name"]}',
         "league": "Bundesliga",
@@ -431,7 +433,12 @@ for player in bundesliga_tm:
         "shots": understat["shots"] if understat is not None else None,
         "key_passes": understat["key_passes"] if understat is not None else None,
         "npxG": understat["npxG"] if understat is not None else None,
-        
+        "date_of_birth":player["date_of_birth"],
+        "position":player["position"],
+        "contract_expires":player["contract_expires"],
+        "current_market_value":player["current_market_value"],
+        "current_club":player["current_club"],
+        "foot":player["foot"],
                 "fotmob_name": (
                     fotmob["ParticipantName"]
                     if fotmob is not None
@@ -465,7 +472,7 @@ for player in bundesliga_tm:
 for player in laliga_tm:
     understat = player.get("understat_match")
     fotmob = player.get("fotmob_match")
-
+    # tm=player.get(laliga_tm)
     matched_players.append({
         "player_name": f'{player["name"]} {player["last_name"]}',
         "league": "LaLiga",
@@ -480,7 +487,12 @@ for player in laliga_tm:
         "shots": understat["shots"] if understat is not None else None,
         "key_passes": understat["key_passes"] if understat is not None else None,
         "npxG": understat["npxG"] if understat is not None else None,
-        
+        "date_of_birth":player["date_of_birth"],
+        "position":player["position"],
+        "contract_expires":player["contract_expires"],
+        "current_market_value":player["current_market_value"],
+        "current_club":player["current_club"],
+        "foot":player["foot"],
                 "fotmob_name": (
                     fotmob["ParticipantName"]
                     if fotmob is not None
@@ -515,4 +527,4 @@ result_matched_players= matched_players
 
 # print("Total matched players:", len(matched_players))
 # print(matched_players[:3])
-
+# print(result_matched_players)

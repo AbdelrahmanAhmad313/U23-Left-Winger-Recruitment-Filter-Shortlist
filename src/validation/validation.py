@@ -89,12 +89,14 @@ def run_validation(df):
         "violations": check_goals_vs_shots(df),
     "severity": "FAIL"
     })
+    
     results.append({
     "category": "Source Coverage",
     "check": "Missing Understat data",
     "violations": df["understat_id"].isna().sum(),
     "severity": "WARNING"
 })
+    
     results.append({
         "category": "Logical Consistency",
         "check": "Goals with zero shots",
@@ -332,7 +334,7 @@ def run_validation(df):
     # ---------------------------------------------------------
 
     for column in [
-        "transfermarkt_code",
+        "transfermarkt_id",
         "understat_id",
         "fotmob_id"
     ]:
@@ -359,8 +361,8 @@ def run_validation(df):
     required_columns = [
         "player_name",
         "league",
-        "transfermarkt_club",
-        "transfermarkt_code"
+        "current_club",
+        "transfermarkt_id"
     ]
 
     missing_required_values = df[required_columns].isna().sum().sum()
