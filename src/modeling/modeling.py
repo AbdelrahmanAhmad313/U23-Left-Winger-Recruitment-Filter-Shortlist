@@ -17,7 +17,6 @@ candidate_players_columns = [
 "foot",
 "contract_expires",
 "current_club",
-"current_market_value",
 ]
 
 market_value_columns=[
@@ -155,52 +154,44 @@ candidate_data_status_df.to_csv(
     index=False
 )
 
+player_valuations_df.to_csv(
+    MODEL_DIR / "market_value.csv",
+    index=False
+)
+
 print("Model tables exported successfully.")
 
 # =========================
 # FINAL MODEL SUMMARY
 # =========================
 
-# print("\nFinal model summary:")
-# print("candidate_players:", candidate_players_df.shape)
-# print("source_identity:", source_identity_df.shape)
-# print("understat_stats:", understat_stats_df.shape)
-# print("fotmob_stats:", fotmob_stats_df.shape)
-# print("candidate_data_status:", candidate_data_status_df.shape)
+print("\nFinal model summary:")
+print("candidate_players:", candidate_players_df.shape)
+print("source_identity:", source_identity_df.shape)
+print("understat_stats:", understat_stats_df.shape)
+print("fotmob_stats:", fotmob_stats_df.shape)
+print("candidate_data_status:", candidate_data_status_df.shape)
 
-# print("\nUnique player counts:")
-# print(
-#     "candidate_players:",
-#     candidate_players_df["player_key"].nunique()
-# )
-# print(
-#     "source_identity:",
-#     source_identity_df["player_key"].nunique()
-# )
-# print(
-#     "understat_stats:",
-#     understat_stats_df["player_key"].nunique()
-# )
-# print(
-#     "fotmob_stats:",
-#     fotmob_stats_df["player_key"].nunique()
-# )
-# print(
-#     "candidate_data_status:",
-#     candidate_data_status_df["player_key"].nunique()
-# )
+print("\nUnique player counts:")
+print(
+    "candidate_players:",
+    candidate_players_df["player_key"].nunique()
+)
+print(
+    "source_identity:",
+    source_identity_df["player_key"].nunique()
+)
+print(
+    "understat_stats:",
+    understat_stats_df["player_key"].nunique()
+)
+print(
+    "fotmob_stats:",
+    fotmob_stats_df["player_key"].nunique()
+)
+print(
+    "candidate_data_status:",
+    candidate_data_status_df["player_key"].nunique()
+)
 
 
-# print(market_value_df.head())
-# print(market_value_df.shape)
-# print(market_value_df["player_key"].nunique())
-# print(market_value_df["player_key"].is_unique)
-
-market_value_orphans = market_value_df[
-    ~market_value_df["player_key"].isin(
-        candidate_players_df["player_key"]
-    )
-]
-
-print("Market value orphan keys:")
-print(market_value_orphans["player_key"].tolist())

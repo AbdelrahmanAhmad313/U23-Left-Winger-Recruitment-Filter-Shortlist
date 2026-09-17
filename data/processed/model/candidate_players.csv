@@ -1,51 +1,51 @@
-player_key,player_name,league,club_2025_26,date_of_birth,age_2026_07_01,position,foot,contract_expires,current_club,current_market_value
-1,Justin Diehl,Bundesliga,VfB Stuttgart,2004-11-27,21,Attack - Left Winger,right,2029-06-30,vfb stuttgart,
-2,Julien Duranville,Bundesliga,Borussia Dortmund,2006-05-05,20,Attack - Left Winger,right,2031-06-30,olympique lyon,
-3,Mathis Albert,Bundesliga,Borussia Dortmund,2009-05-21,17,Attack - Left Winger,right,2027-06-30,borussia dortmund,
-4,Wisdom Mike,Bundesliga,Bayern Munich,2008-09-24,17,Attack - Left Winger,right,2029-06-30,club brugge kv,
-5,Maycon Cardozo,Bundesliga,Bayern Munich,2008-10-10,17,Attack - Left Winger,right,2028-06-30,fc bayern munich ii,
-6,Eliesse Ben Seghir,Bundesliga,Bayer 04 Leverkusen,2005-02-16,21,Attack - Left Winger,right,2030-06-30,bayer 04 leverkusen,
-7,Alexander Røssing-Lelesiit,Bundesliga,Hamburger SV,2007-01-20,19,Attack - Left Winger,right,2030-06-30,hamburger sv,
-8,Fábio Baldé,Bundesliga,Hamburger SV,2005-07-20,20,Attack - Left Winger,right,2031-06-30,rc strasbourg alsace,
-9,Antonio Nusa,Bundesliga,RB Leipzig,2005-04-17,21,Attack - Left Winger,right,2029-06-30,rb leipzig,
-10,Dele Thomas,Bundesliga,RB Leipzig,2007-07-23,18,Attack - Left Winger,right,2030-06-30,nec nijmegen,
-11,Suleman Sani,Bundesliga,RB Leipzig,2006-09-01,19,Attack - Left Winger,right,2031-06-30,rb leipzig,
-12,Tidiam Gomis,Bundesliga,RB Leipzig,2006-08-08,19,Attack - Left Winger,right,2029-06-30,rb leipzig,
-13,Bazoumana Touré,Bundesliga,TSG 1899 Hoffenheim,2006-03-02,20,Attack - Left Winger,left,2031-06-30,newcastle united,
-14,Deniz Zeitler,Bundesliga,TSG 1899 Hoffenheim,2006-12-13,19,Attack - Left Winger,both,2027-06-30,sc paderborn 07,
-15,Jean-Mattéo Bahoya,Bundesliga,Eintracht Frankfurt,2005-05-07,21,Attack - Left Winger,right,2027-06-30,leeds united,
-16,Trevor Benedict,Bundesliga,VfL Wolfsburg,2007-04-04,19,Attack - Left Winger,No Info,,vfl wolfsburg,
-17,Bruno Katz,Bundesliga,VfL Wolfsburg,2008-05-14,18,Attack - Left Winger,No Info,2029-06-30,vfl wolfsburg,
-18,Livan Burcu,Bundesliga,1.FC Union Berlin,2004-09-28,21,Attack - Left Winger,right,,1 fc union berlin,
-19,Linus Güther,Bundesliga,1.FC Union Berlin,2010-04-08,16,Attack - Left Winger,right,2028-06-30,1 fc union berlin,
-20,Said El Mala,Bundesliga,1.FC Köln,2006-08-26,19,Attack - Left Winger,both,2031-06-30,1 fc koln,
-21,Hugo Bolin,Bundesliga,Borussia Mönchengladbach,2003-07-24,22,Attack - Left Winger,right,2030-06-30,borussia monchengladbach,
-22,Samuel Mbangula,Bundesliga,SV Werder Bremen,2004-01-16,22,Attack - Left Winger,right,2027-06-30,bologna fc 1909,
-23,Yannik Wagner,Bundesliga,1.FC Heidenheim 1846,2007-05-09,19,Attack - Left Winger,left,2029-06-30,1 fc heidenheim 1846,
-24,Arijon Ibrahimovic,Bundesliga,1.FC Heidenheim 1846,2005-12-11,20,Attack - Left Winger,right,2027-06-30,fc augsburg,
-25,Ismaël Gharbi,Bundesliga,FC Augsburg,2004-04-10,22,Attack - Left Winger,right,2027-06-30,cd leganes,
-26,Kyliane Dong,Bundesliga,FC Augsburg,2004-09-27,21,Attack - Left Winger,right,2027-06-30,bolton wanderers,
-27,Aiman Dardari,Bundesliga,FC Augsburg,2005-03-21,21,Attack - Left Winger,both,2027-06-30,rot weiss essen,
-28, Elijah Gift,LaLiga,Athletic Bilbao,2006-06-11,20,Attack - Left Winger,left,2027-06-30,sd eibar,
-29,Joel Roca,LaLiga,Girona FC,2005-06-07,21,Attack - Left Winger,right,2029-06-30,olympiacos piraeus,
-30,Juan Arango,LaLiga,Girona FC,2006-06-27,20,Attack - Left Winger,right,2028-06-30,girona fc b,
-31,Williot Swedberg,LaLiga,Celta de Vigo,2004-02-01,22,Attack - Left Winger,right,2029-06-30,celta de vigo,
-32,Hugo Álvarez,LaLiga,Celta de Vigo,2003-07-02,22,Attack - Left Winger,right,2028-06-30,celta de vigo,
-33,Ángel Arcos,LaLiga,Celta de Vigo,2006-04-18,20,Attack - Left Winger,No Info,2027-06-30,rc celta fortuna,
-34, Wesley,LaLiga,Real Sociedad,2005-03-05,21,Attack - Left Winger,right,2027-06-30,cruzeiro esporte clube,
-35,Alex Marchal,LaLiga,Real Sociedad,2007-09-17,18,Attack - Left Winger,right,2029-06-30,real sociedad b,
-36,Arkaitz Mariezkurrena,LaLiga,Real Sociedad,2005-04-05,21,Attack - Left Winger,left,2029-06-30,real sociedad b,
-37, Oso,LaLiga,Sevilla FC,2003-07-09,22,Attack - Left Winger,left,2031-06-30,rc strasbourg alsace,
-38,Alberto Moleiro,LaLiga,Villarreal CF,2003-09-30,22,Attack - Left Winger,right,2030-06-30,villarreal cf,
-39,Joselillo Gaitán,LaLiga,Villarreal CF,2007-02-25,19,Attack - Left Winger,right,2028-06-30,villarreal cf b,
-40,Mahamoud Barry,LaLiga,Villarreal CF,2006-06-11,20,Attack - Left Winger,right,2029-06-30,villarreal cf b,
-41,Pablo López,LaLiga,Valencia CF,2006-03-27,20,Attack - Left Winger,left,2027-06-30,valencia mestalla,
-42,Lluc Castell,LaLiga,RCD Espanyol Barcelona,2006-09-19,19,Attack - Left Winger,right,2029-06-30,burnley fc,
-43,Alex Almansa,LaLiga,RCD Espanyol Barcelona,2003-11-08,22,Attack - Left Winger,left,2028-06-30,gimnastic de tarragona,
-44,Izei Hernández,LaLiga,Deportivo Alavés,2007-02-02,19,Attack - Left Winger,No Info,2030-06-30,deportivo alaves b,
-45,Jan Virgili,LaLiga,RCD Mallorca,2006-07-26,19,Attack - Left Winger,right,2031-06-30,club brugge kv,
-46,Víctor Muñoz,LaLiga,CA Osasuna,2003-07-13,22,Attack - Left Winger,right,2032-06-30,liverpool fc,
-47,Adrián Liso,LaLiga,Getafe CF,2005-04-02,21,Attack - Left Winger,left,2027-06-30,rcd mallorca,
-48,Yassin Tallal,LaLiga,Getafe CF,2005-03-03,21,Attack - Left Winger,right,2027-06-30,real union club,
-49,Thiago Fernández,LaLiga,Real Oviedo,2004-04-03,22,Attack - Left Winger,right,2027-06-30,levante ud,
-50,Paco Cortés,LaLiga,Levante UD,2007-08-11,18,Attack - Left Winger,right,2028-06-30,levante ud,
+player_key,player_name,league,club_2025_26,date_of_birth,age_2026_07_01,position,foot,contract_expires,current_club
+1,Justin Diehl,Bundesliga,VfB Stuttgart,2004-11-27,21,Attack - Left Winger,right,2029-06-30,vfb stuttgart
+2,Julien Duranville,Bundesliga,Borussia Dortmund,2006-05-05,20,Attack - Left Winger,right,2031-06-30,olympique lyon
+3,Mathis Albert,Bundesliga,Borussia Dortmund,2009-05-21,17,Attack - Left Winger,right,2027-06-30,borussia dortmund
+4,Wisdom Mike,Bundesliga,Bayern Munich,2008-09-24,17,Attack - Left Winger,right,2029-06-30,club brugge kv
+5,Maycon Cardozo,Bundesliga,Bayern Munich,2008-10-10,17,Attack - Left Winger,right,2028-06-30,fc bayern munich ii
+6,Eliesse Ben Seghir,Bundesliga,Bayer 04 Leverkusen,2005-02-16,21,Attack - Left Winger,right,2030-06-30,bayer 04 leverkusen
+7,Alexander Røssing-Lelesiit,Bundesliga,Hamburger SV,2007-01-20,19,Attack - Left Winger,right,2030-06-30,hamburger sv
+8,Fábio Baldé,Bundesliga,Hamburger SV,2005-07-20,20,Attack - Left Winger,right,2031-06-30,rc strasbourg alsace
+9,Antonio Nusa,Bundesliga,RB Leipzig,2005-04-17,21,Attack - Left Winger,right,2029-06-30,rb leipzig
+10,Dele Thomas,Bundesliga,RB Leipzig,2007-07-23,18,Attack - Left Winger,right,2030-06-30,nec nijmegen
+11,Suleman Sani,Bundesliga,RB Leipzig,2006-09-01,19,Attack - Left Winger,right,2031-06-30,rb leipzig
+12,Tidiam Gomis,Bundesliga,RB Leipzig,2006-08-08,19,Attack - Left Winger,right,2029-06-30,rb leipzig
+13,Bazoumana Touré,Bundesliga,TSG 1899 Hoffenheim,2006-03-02,20,Attack - Left Winger,left,2031-06-30,newcastle united
+14,Deniz Zeitler,Bundesliga,TSG 1899 Hoffenheim,2006-12-13,19,Attack - Left Winger,both,2027-06-30,sc paderborn 07
+15,Jean-Mattéo Bahoya,Bundesliga,Eintracht Frankfurt,2005-05-07,21,Attack - Left Winger,right,2027-06-30,leeds united
+16,Trevor Benedict,Bundesliga,VfL Wolfsburg,2007-04-04,19,Attack - Left Winger,No Info,,vfl wolfsburg
+17,Bruno Katz,Bundesliga,VfL Wolfsburg,2008-05-14,18,Attack - Left Winger,No Info,2029-06-30,vfl wolfsburg
+18,Livan Burcu,Bundesliga,1.FC Union Berlin,2004-09-28,21,Attack - Left Winger,right,,1 fc union berlin
+19,Linus Güther,Bundesliga,1.FC Union Berlin,2010-04-08,16,Attack - Left Winger,right,2028-06-30,1 fc union berlin
+20,Said El Mala,Bundesliga,1.FC Köln,2006-08-26,19,Attack - Left Winger,both,2031-06-30,1 fc koln
+21,Hugo Bolin,Bundesliga,Borussia Mönchengladbach,2003-07-24,22,Attack - Left Winger,right,2030-06-30,borussia monchengladbach
+22,Samuel Mbangula,Bundesliga,SV Werder Bremen,2004-01-16,22,Attack - Left Winger,right,2027-06-30,bologna fc 1909
+23,Yannik Wagner,Bundesliga,1.FC Heidenheim 1846,2007-05-09,19,Attack - Left Winger,left,2029-06-30,1 fc heidenheim 1846
+24,Arijon Ibrahimovic,Bundesliga,1.FC Heidenheim 1846,2005-12-11,20,Attack - Left Winger,right,2027-06-30,fc augsburg
+25,Ismaël Gharbi,Bundesliga,FC Augsburg,2004-04-10,22,Attack - Left Winger,right,2027-06-30,cd leganes
+26,Kyliane Dong,Bundesliga,FC Augsburg,2004-09-27,21,Attack - Left Winger,right,2027-06-30,bolton wanderers
+27,Aiman Dardari,Bundesliga,FC Augsburg,2005-03-21,21,Attack - Left Winger,both,2027-06-30,rot weiss essen
+28, Elijah Gift,LaLiga,Athletic Bilbao,2006-06-11,20,Attack - Left Winger,left,2027-06-30,sd eibar
+29,Joel Roca,LaLiga,Girona FC,2005-06-07,21,Attack - Left Winger,right,2029-06-30,olympiacos piraeus
+30,Juan Arango,LaLiga,Girona FC,2006-06-27,20,Attack - Left Winger,right,2028-06-30,girona fc b
+31,Williot Swedberg,LaLiga,Celta de Vigo,2004-02-01,22,Attack - Left Winger,right,2029-06-30,celta de vigo
+32,Hugo Álvarez,LaLiga,Celta de Vigo,2003-07-02,22,Attack - Left Winger,right,2028-06-30,celta de vigo
+33,Ángel Arcos,LaLiga,Celta de Vigo,2006-04-18,20,Attack - Left Winger,No Info,2027-06-30,rc celta fortuna
+34, Wesley,LaLiga,Real Sociedad,2005-03-05,21,Attack - Left Winger,right,2027-06-30,cruzeiro esporte clube
+35,Alex Marchal,LaLiga,Real Sociedad,2007-09-17,18,Attack - Left Winger,right,2029-06-30,real sociedad b
+36,Arkaitz Mariezkurrena,LaLiga,Real Sociedad,2005-04-05,21,Attack - Left Winger,left,2029-06-30,real sociedad b
+37, Oso,LaLiga,Sevilla FC,2003-07-09,22,Attack - Left Winger,left,2031-06-30,rc strasbourg alsace
+38,Alberto Moleiro,LaLiga,Villarreal CF,2003-09-30,22,Attack - Left Winger,right,2030-06-30,villarreal cf
+39,Joselillo Gaitán,LaLiga,Villarreal CF,2007-02-25,19,Attack - Left Winger,right,2028-06-30,villarreal cf b
+40,Mahamoud Barry,LaLiga,Villarreal CF,2006-06-11,20,Attack - Left Winger,right,2029-06-30,villarreal cf b
+41,Pablo López,LaLiga,Valencia CF,2006-03-27,20,Attack - Left Winger,left,2027-06-30,valencia mestalla
+42,Lluc Castell,LaLiga,RCD Espanyol Barcelona,2006-09-19,19,Attack - Left Winger,right,2029-06-30,burnley fc
+43,Alex Almansa,LaLiga,RCD Espanyol Barcelona,2003-11-08,22,Attack - Left Winger,left,2028-06-30,gimnastic de tarragona
+44,Izei Hernández,LaLiga,Deportivo Alavés,2007-02-02,19,Attack - Left Winger,No Info,2030-06-30,deportivo alaves b
+45,Jan Virgili,LaLiga,RCD Mallorca,2006-07-26,19,Attack - Left Winger,right,2031-06-30,club brugge kv
+46,Víctor Muñoz,LaLiga,CA Osasuna,2003-07-13,22,Attack - Left Winger,right,2032-06-30,liverpool fc
+47,Adrián Liso,LaLiga,Getafe CF,2005-04-02,21,Attack - Left Winger,left,2027-06-30,rcd mallorca
+48,Yassin Tallal,LaLiga,Getafe CF,2005-03-03,21,Attack - Left Winger,right,2027-06-30,real union club
+49,Thiago Fernández,LaLiga,Real Oviedo,2004-04-03,22,Attack - Left Winger,right,2027-06-30,levante ud
+50,Paco Cortés,LaLiga,Levante UD,2007-08-11,18,Attack - Left Winger,right,2028-06-30,levante ud
