@@ -4,7 +4,7 @@ import pandas as pd
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from cleaning.cleaning import all_candidates,player_valuations_df
+from cleaning.cleaning import all_candidates
 
 
 def check_duplicate_players(df):
