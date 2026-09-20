@@ -369,3 +369,175 @@ limitations = [
     "Market value is an estimated valuation and does not represent the actual transfer fee or total acquisition cost.",
     "The analysis cannot determine whether a player would adapt successfully to a different league, club, or tactical system."
 ]
+
+high_xg_threshold = eligible_playtime_candidates["xG_per_90"].quantile(0.65)
+
+acceptable_xg_threshold = eligible_playtime_candidates["xG_per_90"].quantile(0.40)
+
+high_xa_threshold = eligible_playtime_candidates["xA_per_90"].quantile(0.65)
+
+acceptable_xa_threshold = eligible_playtime_candidates["xA_per_90"].quantile(0.40)
+
+# -----
+
+dribble_threshold = eligible_playtime_candidates["successful_dribbles_per_90"].quantile(0.45)
+
+defensive_threshold = eligible_playtime_candidates["defensive_actions_per_90"].quantile(0.35)
+
+recovery_threshold = eligible_playtime_candidates["recoveries_per_90"].quantile(0.35)
+
+pressing_threshold = eligible_playtime_candidates["possession_won_final_3rd_per_90"].quantile(0.40)
+
+# print((
+#     (eligible_playtime_candidates["xG_per_90"] >= xg_threshold) &
+#     (eligible_playtime_candidates["xA_per_90"] >= xa_threshold) 
+    # &
+    # (eligible_playtime_candidates["successful_dribbles_per_90"] >= dribble_threshold) &
+    # (eligible_playtime_candidates["defensive_actions_per_90"] >= defensive_threshold) &
+    # (eligible_playtime_candidates["recoveries_per_90"] >= recovery_threshold) &
+    # (eligible_playtime_candidates["possession_won_final_3rd_per_90"] >= pressing_threshold)
+# ).sum())
+
+# print("xG:", xg_threshold)
+# print("xA:", xa_threshold)
+# print("Dribbles:", dribble_threshold)
+# print("Defensive:", defensive_threshold)
+# print("Recoveries:", recovery_threshold)
+# print("Pressing:", pressing_threshold)
+
+# print("xG:", (
+#     eligible_playtime_candidates["xG_per_90"] >= xg_threshold
+# ).sum())
+
+# print("xA:", (
+#     eligible_playtime_candidates["xA_per_90"] >= xa_threshold
+# ).sum())
+
+# print("Dribbles:", (
+#     eligible_playtime_candidates["successful_dribbles_per_90"] >= dribble_threshold
+# ).sum())
+
+# print("Defensive:", (
+#     eligible_playtime_candidates["defensive_actions_per_90"] >= defensive_threshold
+# ).sum())
+
+# print("Recoveries:", (
+#     eligible_playtime_candidates["recoveries_per_90"] >= recovery_threshold
+# ).sum())
+
+# print("Pressing:", (
+#     eligible_playtime_candidates["possession_won_final_3rd_per_90"] >= pressing_threshold
+# ).sum())
+
+# print(eligible_playtime_candidates.loc[
+#     (
+#         (eligible_playtime_candidates["xG_per_90"] >= xg_threshold) &
+#         (eligible_playtime_candidates["xA_per_90"] >= xa_threshold) &
+#         (eligible_playtime_candidates["successful_dribbles_per_90"] >= dribble_threshold) &
+#         (eligible_playtime_candidates["defensive_actions_per_90"] >= defensive_threshold) &
+#         (eligible_playtime_candidates["recoveries_per_90"] >= recovery_threshold) &
+#         (eligible_playtime_candidates["possession_won_final_3rd_per_90"] >= pressing_threshold)
+#     ),
+#     ["player_name", "xG_per_90", "xA_per_90",
+#      "successful_dribbles_per_90", "defensive_actions_per_90",
+#      "recoveries_per_90", "possession_won_final_3rd_per_90"]
+# ])
+
+
+for index, player in eligible_playtime_candidates.iterrows():
+
+    # 1. High xG + High xA
+    if (
+        player["xG_per_90"] >= high_xg_threshold
+        and player["xA_per_90"] >= high_xa_threshold
+    ):
+        profile = "All-Round Attacker"
+
+    # 2. High xG + Acceptable xA
+    elif (
+        player["xG_per_90"] >= high_xg_threshold
+        and player["xA_per_90"] >= acceptable_xa_threshold
+        and player["xA_per_90"] < high_xa_threshold
+    ):
+        profile = "Goal-Focused Attacker"
+
+    # 3. High xG + Low xA
+    elif (
+        player["xG_per_90"] >= high_xg_threshold
+        and player["xA_per_90"] < acceptable_xa_threshold
+    ):
+        profile = "Goal-Focused / Low Creation"
+
+    # 4. Acceptable xG + High xA
+    elif (
+        player["xG_per_90"] >= acceptable_xg_threshold
+        and player["xG_per_90"] < high_xg_threshold
+        and player["xA_per_90"] >= high_xa_threshold
+    ):
+        profile = "Creator"
+
+    # 5. Acceptable xG + Acceptable xA
+    elif (
+        player["xG_per_90"] >= acceptable_xg_threshold
+        and player["xG_per_90"] < high_xg_threshold
+        and player["xA_per_90"] >= acceptable_xa_threshold
+        and player["xA_per_90"] < high_xa_threshold
+    ):
+        profile = "Balanced Attacker"
+
+    # 6. Acceptable xG + Low xA
+    elif (
+        player["xG_per_90"] >= acceptable_xg_threshold
+        and player["xG_per_90"] < high_xg_threshold
+        and player["xA_per_90"] < acceptable_xa_threshold
+    ):
+        profile = "Goal-Focused / Low Creation"
+
+    # 7. Low xG + High xA
+    elif (
+        player["xG_per_90"] < acceptable_xg_threshold
+        and player["xA_per_90"] >= high_xa_threshold
+    ):
+        profile = "Creator / Low Goal Threat"
+
+    # 8. Low xG + Acceptable xA
+    elif (
+    player["xG_per_90"] < acceptable_xg_threshold
+    and player["xA_per_90"] >= acceptable_xa_threshold
+    and player["xA_per_90"] < high_xa_threshold
+        ):
+        profile = "Creator / Low Goal Threat"
+
+    else:
+        profile = "Lower Attacking Output"
+
+    eligible_playtime_candidates.loc[index, "profile"] = profile
+    
+
+candidates_attacking_table["profile"]=eligible_playtime_candidates["profile"]
+
+# print(eligible_playtime_candidates[["player_name","profile"]])
+
+
+for index, player in eligible_playtime_candidates.iterrows():
+    
+    eligible_playtime_candidates.loc[index,"Meets_goal_threat_threshold"]=player["xG_per_90"]>=high_xg_threshold
+    eligible_playtime_candidates.loc[index,"Meets_chance_creation_threshold"]=player["xA_per_90"]>=high_xa_threshold
+    eligible_playtime_candidates.loc[index,"Meets_1v1_threshold"]=player["successful_dribbles_per_90"]>=dribble_threshold
+    eligible_playtime_candidates.loc[index,"Meets_defensive_actions_baseline"]=player["defensive_actions_per_90"]>=defensive_threshold
+    eligible_playtime_candidates.loc[index,"Meets_recoveries_baseline"]=player["recoveries_per_90"]>=recovery_threshold
+    eligible_playtime_candidates.loc[index,"Meets_pressing_baseline"]=player["possession_won_final_3rd_per_90"]>=pressing_threshold
+    
+    
+eligible_playtime_candidates=eligible_playtime_candidates.merge(
+    player_valuations_df,
+    on="player_key",
+    how="inner"
+)
+print(eligible_playtime_candidates[["player_name",
+                                    "market_value_in_eur",
+                                    "current_club",
+                                    "understat_minutes",
+                                    "fotmob_minutes",
+                                    "contract_expires",
+                                    "age_2026_07_01"]].to_string())

@@ -21,22 +21,22 @@ def goalAndChanceRelation(df):
             alpha=0.8
         )
 
-    # Candidate average — xG/90
+    # Population average — xG/90
     ax.axvline(
         df["xG_per_90"].mean(),
-        color="red",
+        color="dimgray",
         linestyle="--",
         linewidth=2,
-        label="Candidate Average — xG/90"
+        label="Population Average — xG/90"
     )
 
-    # Candidate average — xA/90
+    # Population average — xA/90
     ax.axhline(
         df["xA_per_90"].mean(),
-        color="blue",
-        linestyle="--",
+        color="dimgray",
+        linestyle=":",
         linewidth=2,
-        label="Candidate Average — xA/90"
+        label="Population Average — xA/90"
     )
 
     # Main title
@@ -64,11 +64,38 @@ def goalAndChanceRelation(df):
         fontsize=12
     )
 
+    # Extra room for Said El Mala
+    x_min = df["xG_per_90"].min()
+    x_max = df["xG_per_90"].max()
+
+    ax.set_xlim(
+        x_min,
+        x_max + 0.04
+    )
+
+    # Custom annotation offsets
+    annotation_offsets = {
+        "Arijon Ibrahimovic": (0.02, -0.02),
+        "Antonio Nusa": (0.015, 0.005),
+        "Alberto Moleiro": (-0.035, -0.02)
+    }
+
     # Player annotations
     for _, row in df.iterrows():
+
+        player_name = row["player_name"]
+
+        dx, dy = annotation_offsets.get(
+            player_name,
+            (0.005, 0.005)
+        )
+
         ax.annotate(
-            row["player_name"],
-            (row["xG_per_90"], row["xA_per_90"]),
+            player_name,
+            (
+                row["xG_per_90"] + dx,
+                row["xA_per_90"] + dy
+            ),
             fontsize=9
         )
 
