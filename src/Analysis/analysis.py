@@ -758,4 +758,173 @@ final_candidate_summary = {
 final_candidate_summary=pd.DataFrame(final_candidate_summary)
 
 
-print(final_candidate_summary.to_string())
+# print(final_candidate_summary.to_string())
+
+# ============================================================
+# POWER BI EXPORT DATASET
+# ============================================================
+# One flat dataset for all Power BI pages:
+# Performance + Methodology + Recruitment Context + Investigation
+
+# Use the already enriched candidate dataset created above.
+powerbi_recruitment_data = eligible_playtime_candidates.copy()
+
+# Keep the candidate name consistent with the investigation summary.
+# The summary uses "El Mala" while the analytical data may use the
+# source player name.
+investigation_name_map = {
+    "Nusa": "Nusa",
+    "El Mala": "El Mala",
+    "Ibrahimovic": "Ibrahimovic",
+    "Roca": "Roca",
+    "Moleiro": "Moleiro",
+}
+
+powerbi_recruitment_data["Investigation_Candidate"] = (
+    powerbi_recruitment_data["player_name"]
+    .astype(str)
+    .str.lower()
+    .str.replace("_", " ", regex=False)
+)
+
+def match_investigation_candidate(player_name):
+    name = str(player_name).lower()
+    if "nusa" in name:
+        return "Nusa"
+    if "el mala" in name:
+        return "El Mala"
+    if "ibrahimovic" in name:
+        return "Ibrahimovic"
+    if "roca" in name:
+        return "Roca"
+    if "moleiro" in name:
+        return "Moleiro"
+    return None
+
+powerbi_recruitment_data["Investigation_Candidate"] = (
+    powerbi_recruitment_data["player_name"]
+    .apply(match_investigation_candidate)
+)
+
+# Rename source fields into clean Power BI-friendly names.
+powerbi_recruitment_data = powerbi_recruitment_data.rename(columns={
+    "player_name": "Player",
+    "league": "League",
+    "understat_minutes": "Understat minutes",
+    "fotmob_minutes": "FotMob minutes",
+    "xG_per_90": "xG/90",
+    "xA_per_90": "xA/90",
+    "expected_contribution_per_90": "Expected contribution/90",
+    "successful_dribbles_per_90": "Successful dribbles/90",
+    "chances_created_per_90": "Chances created/90",
+    "defensive_actions_per_90": "Defensive actions/90",
+    "recoveries_per_90": "Recoveries/90",
+    "possession_won_final_3rd_per_90": "Possession won final third/90",
+    "profile": "Attacking Profile",
+    "Meets_goal_threat_threshold": "Meets goal-threat threshold",
+    "Meets_chance_creation_threshold": "Meets chance-creation threshold",
+    "Meets_1v1_threshold": "Meets 1v1 threshold",
+    "Meets_defensive_actions_baseline": "Meets defensive baseline",
+    "Meets_recoveries_baseline": "Meets recovery baseline",
+    "Meets_pressing_baseline": "Meets pressing baseline",
+    "age_2026_07_01": "Age",
+    "current_club": "Current club",
+    "contract_expires": "Contract expiry",
+    "contract_window": "Contract window",
+    "market_value_in_eur": "Market value",
+})
+
+# Add the final investigation layer.
+investigation_export = final_candidate_summary.rename(columns={
+    "Candidate": "Investigation_Candidate",
+    "Performance_Fit": "Performance Fit",
+    "Tactical_Fit": "Tactical Fit",
+    "Main_Risk": "Main Risk",
+    "Key_Unknown": "Key Unknown",
+    "Recruitment_Question": "Recruitment Question",
+    "Investigation_Status": "Investigation Status",
+})[
+    [
+        "Investigation_Candidate",
+        "Performance Fit",
+        "Tactical Fit",
+        "Main Risk",
+        "Key Unknown",
+        "Recruitment Question",
+        "Investigation Status",
+    ]
+]
+
+powerbi_recruitment_data = powerbi_recruitment_data.merge(
+    investigation_export,
+    on="Investigation_Candidate",
+    how="left"
+)
+
+# Final Power BI schema.
+powerbi_columns = [
+    # Performance
+    "Player",
+    "League",
+    "Understat minutes",
+    "FotMob minutes",
+    "xG/90",
+    "xA/90",
+    "Expected contribution/90",
+    "Successful dribbles/90",
+    "Chances created/90",
+    "Defensive actions/90",
+    "Recoveries/90",
+    "Possession won final third/90",
+
+    # Methodology
+    "Attacking Profile",
+    "Meets goal-threat threshold",
+    "Meets chance-creation threshold",
+    "Meets 1v1 threshold",
+    "Meets defensive baseline",
+    "Meets recovery baseline",
+    "Meets pressing baseline",
+
+    # Recruitment context
+    "Age",
+    "Current club",
+    "Contract expiry",
+    "Contract window",
+    "Market value",
+
+    # Investigation
+    "Performance Fit",
+    "Tactical Fit",
+    "Main Risk",
+    "Key Unknown",
+    "Recruitment Question",
+    "Investigation Status",
+]
+
+# Keep only fields needed by Power BI.
+powerbi_recruitment_data = powerbi_recruitment_data[
+    [column for column in powerbi_columns if column in powerbi_recruitment_data.columns]
+].copy()
+
+# Clean date formatting for Power BI.
+if "Contract expiry" in powerbi_recruitment_data.columns:
+    powerbi_recruitment_data["Contract expiry"] = pd.to_datetime(
+        powerbi_recruitment_data["Contract expiry"],
+        errors="coerce"
+    ).dt.date
+
+# Export one clean flat CSV.
+powerbi_export_path = Path(__file__).resolve().parent / "powerbi_recruitment_data.csv"
+
+powerbi_recruitment_data.to_csv(
+    powerbi_export_path,
+    index=False,
+    encoding="utf-8-sig"
+)
+
+print("\nPower BI export created:")
+print(powerbi_export_path)
+print("\nPower BI columns:")
+print(powerbi_recruitment_data.columns.tolist())
+print("\nRows exported:", len(powerbi_recruitment_data))
