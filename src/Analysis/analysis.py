@@ -534,10 +534,228 @@ eligible_playtime_candidates=eligible_playtime_candidates.merge(
     on="player_key",
     how="inner"
 )
-print(eligible_playtime_candidates[["player_name",
-                                    "market_value_in_eur",
-                                    "current_club",
-                                    "understat_minutes",
-                                    "fotmob_minutes",
-                                    "contract_expires",
-                                    "age_2026_07_01"]].to_string())
+# print(eligible_playtime_candidates[["player_name",
+#                                     "market_value_in_eur",
+#                                     "current_club",
+#                                     "understat_minutes",
+#                                     "fotmob_minutes",
+#                                     "contract_expires",
+#                                     "age_2026_07_01"]].to_string())
+
+
+candidate_investigation_summary = {
+
+    "Candidate": [
+        "Nusa",
+        "El_Mala",
+        "Ibrahimovic",
+        "Roca",
+        "Moleiro"
+    ],
+
+    "Attacking_Identity": [
+        "Creator-oriented LW",
+        "Goal-focused LW",
+        "Creator",
+        "Goal-focused / low creation",
+        "Creator / low goal threat"
+    ],
+
+    "Main_Strength": [
+        "1v1 + chance creation",
+        "Inside movement + goal threat",
+        "Passing + chance creation",
+        "Goal-focused movement",
+        "Movement + passing"
+    ],
+
+    "Goal_Threat": [
+        "Lower",
+        "High",
+        "Lower",
+        "High",
+        "Lower"
+    ],
+
+    "Chance_Creation": [
+        "Wide creation",
+        "Crosses + forward passes",
+        "Passing + crosses + set pieces",
+        "Direct passes + crosses",
+        "Movement + passing"
+    ],
+
+    "1v1_Approach": [
+        "Strong supporting weapon",
+        "Speed + ball control",
+        "Passing over 1v1",
+        "Meets threshold; not always direct",
+        "Positioning over 1v1"
+    ],
+
+    "Defensive_Contribution": [
+        "High positioning + pressing + recoveries",
+        "Limited defensive involvement",
+        "High pressing + lane disruption",
+        "Tracks back + supports fullback",
+        "Pressing + interceptions"
+    ],
+
+    "Transition_Behavior": [
+        "Wide pressing + attacking transitions",
+        "Pace + runs into space",
+        "Pressing from advanced areas",
+        "Attacks wide space + tracks back",
+        "Open-space movement + defensive recovery"
+    ],
+
+    "Tactical_Flexibility": [
+        "Structure-dependent",
+        "Can contribute outside transition situations",
+        "Central + wide flexibility",
+        "Different attacking + defensive solutions",
+        "Multiple attacking + defensive positions"
+    ],
+
+    "Main_Concern": [
+        "Goal threat + system transferability",
+        "Defensive contribution + settled defenses",
+        "Goal threat + limited 1v1",
+        "Chance creation + pressing",
+        "Goal threat + 1v1"
+    ],
+
+    "Recruitment_Question": [
+        "Can his strengths transfer outside Leipzig's structure?",
+        "Can contribute against more settled defensive situations",
+        "Can his creativity translate to a higher goal-threat system?",
+        "Can he maintain goal threat with less transition space?",
+        "Can his creation profile translate to our attacking structure?"
+    ]
+}
+candidate_investigation_summary=pd.DataFrame(candidate_investigation_summary)
+
+candidate_uncertainty_summary = {
+
+    "Candidate": [
+        "Nusa",
+        "El_Mala",
+        "Ibrahimovic",
+        "Roca",
+        "Moleiro"
+    ],
+
+    "Known_Strengths": [
+        "1v1 ability, chance creation, wide attacking role",
+        "Goal threat, inside movement, 1v1 ability, pace, transition threat",
+        "Chance creation, passing, crosses, set pieces, advanced pressing",
+        "Goal threat, movement into goal areas, 1v1 ability, defensive support",
+        "Chance creation, movement, passing, pressing, positional flexibility"
+    ],
+
+    "Main_Risk": [
+        "Lower goal threat + structure dependence",
+        "Limited defensive contribution + creation secondary",
+        "Lower goal threat + limited 1v1 ability",
+        "Lower chance creation + below-baseline pressing",
+        "Lower goal threat + limited 1v1 ability"
+    ],
+
+    "Unknown": [
+        "Transferability of creative and 1v1 output to another attacking structure",
+        "Whether goal threat can be maintained against settled defenses and in another structure",
+        "Whether creative value can translate to a role requiring greater goal threat",
+        "Whether goal threat can be maintained when transition space is limited",
+        "How effectively his creation-oriented profile translates to another attacking structure"
+    ],
+
+    "Evidence_Needed": [
+        "Match video across different tactical situations + tactical analysis of role",
+        "Match video against settled defenses + tactical analysis outside transition situations",
+        "Match video in different attacking roles + analysis of goal involvement and positioning",
+        "Match video against deeper defenses + analysis of pressing and chance creation",
+        "Match video in different attacking structures + analysis of goal threat and 1v1 situations"
+    ]
+}
+
+candidate_uncertainty_summary=pd.DataFrame(candidate_uncertainty_summary)
+
+final_candidate_summary = {
+
+    "Candidate": [
+        "Nusa",
+        "El Mala",
+        "Ibrahimovic",
+        "Roca",
+        "Moleiro"
+    ],
+
+    "Attacking_Profile": [
+        "Creator-oriented LW",
+        "Goal-Focused Attacker",
+        "Creator",
+        "Goal-Focused / Low Creation",
+        "Creator / Low Goal Threat"
+    ],
+
+    "Performance_Fit": [
+        "Strong 1v1 and chance-creation output, but below the high-performance xG threshold.",
+        "Strong goal threat and 1v1 output, with high xG/90 and frequent movement into attacking spaces.",
+        "Strong chance-creation output through passing, crosses and movement, but below the high-performance goal-threat reference.",
+        "Strong goal threat and movement into scoring areas, while chance creation and pressing remain below baseline.",
+        "Strong chance-creation output and positional contribution, below the high-performance goal-threat reference and the supporting 1v1 threshold."
+    ],
+
+    "Tactical_Fit": [
+        "Wide-to-inside attacker who contributes through 1v1 actions, movement and chance creation within a high/wide role.",
+        "Left-sided attacker who moves inside, attacks space and uses pace and 1v1 ability to threaten in transition.",
+        "Central/wide creator who contributes through passing, crosses, movement and advanced pressing.",
+        "Wide attacker who moves inside, attacks goal areas and provides defensive support and transition involvement.",
+        "Left-sided creator who moves between wide and central areas and contributes through movement, passing and pressing."
+    ],
+
+    "Recruitment_Context": [
+    "Age 21 | 2,048 Understat minutes | RB Leipzig | Contract 2029 | Market value €32M",
+    "Age 19 | 1,965 Understat minutes | 1. FC Köln | Contract 2031 | Market value €45M",
+    "Age 20 | 2,196 Understat minutes | FC Augsburg | Contract 2027 | Market value €10M",
+    "Age 21 | 1,463 Understat minutes | Olympiacos | Contract 2029 | Market value €6M",
+    "Age 22 | 2,535 Understat minutes | Villarreal | Contract 2030 | Market value €50M"
+    ],
+
+    "Main_Risk": [
+        "Lower goal threat and dependence on his current tactical structure.",
+        "Limited defensive contribution and creation is secondary to his goal-focused profile.",
+        "Lower goal threat and limited reliance on individual 1v1 ability.",
+        "Lower chance creation and below-baseline pressing.",
+        "Lower goal threat and limited 1v1 output."
+    ],
+
+    "Key_Unknown": [
+        "Whether his creative and 1v1 output transfers effectively to a different attacking structure.",
+        "Whether he can maintain his goal threat against settled defenses and within a different tactical structure.",
+        "Whether his creative value can translate to a role requiring greater goal threat.",
+        "Whether he can maintain his goal threat when transition space is limited.",
+        "How effectively his creation-oriented profile translates to another attacking structure."
+    ],
+
+    "Recruitment_Question": [
+        "How transferable are Nusa's strengths outside Leipzig's current tactical structure?",
+        "Can El Mala maintain his goal threat against settled defenses and within a different tactical structure?",
+        "Can Ibrahimovic's creative value translate into a system requiring greater goal threat?",
+        "Can Roca maintain his goal threat when there is less transition space?",
+        "How effectively would Moleiro's creation-oriented profile translate into our club's attacking structure?"
+    ],
+
+    "Investigation_Status": [
+        "Deep Investigation Complete",
+        "Deep Investigation Complete",
+        "Deep Investigation Complete",
+        "Deep Investigation Complete",
+        "Deep Investigation Complete"
+    ]
+}
+
+final_candidate_summary=pd.DataFrame(final_candidate_summary)
+
+
+print(final_candidate_summary.to_string())
