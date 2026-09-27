@@ -832,6 +832,7 @@ powerbi_recruitment_data = powerbi_recruitment_data.rename(columns={
     "contract_expires": "Contract expiry",
     "contract_window": "Contract window",
     "market_value_in_eur": "Market value",
+    
 })
 
 # Add the final investigation layer.
@@ -855,8 +856,37 @@ investigation_export = final_candidate_summary.rename(columns={
     ]
 ]
 
+# Add candidate strengths and evidence needed.
+uncertainty_export = candidate_uncertainty_summary.rename(columns={
+    "Candidate": "Investigation_Candidate",
+    "Known_Strengths": "Known Strengths",
+    "Evidence_Needed": "Evidence Needed",
+})[
+    [
+        "Investigation_Candidate",
+        "Known Strengths",
+        "Evidence Needed",
+    ]
+]
+
+uncertainty_export["Known Strengths"] = (
+    uncertainty_export["Known Strengths"]
+    .apply(lambda x: x[0] if isinstance(x, list) and len(x) > 0 else x)
+)
+
+uncertainty_export["Evidence Needed"] = (
+    uncertainty_export["Evidence Needed"]
+    .apply(lambda x: x[0] if isinstance(x, list) and len(x) > 0 else x)
+)
+
 powerbi_recruitment_data = powerbi_recruitment_data.merge(
     investigation_export,
+    on="Investigation_Candidate",
+    how="left"
+)
+
+powerbi_recruitment_data = powerbi_recruitment_data.merge(
+    uncertainty_export,
     on="Investigation_Candidate",
     how="left"
 )
@@ -896,8 +926,10 @@ powerbi_columns = [
     # Investigation
     "Performance Fit",
     "Tactical Fit",
+    "Known Strengths",
     "Main Risk",
     "Key Unknown",
+    "Evidence Needed",
     "Recruitment Question",
     "Investigation Status",
 ]
